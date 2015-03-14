@@ -16,6 +16,7 @@ git:
   path: github.com/hypriot/rpi-noobs-builder
 
 script:
+  - apt-get update
   - apt-get install -yqq python-pip zip xz 
   - pip install awscli
   - create_noobs.sh
