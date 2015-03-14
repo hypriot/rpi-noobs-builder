@@ -30,4 +30,3 @@ publish:
     secret_key: $$AWS_SECRET_ACCESS_KEY
     source: result/
     target: noobs/
-#    recursive: true
