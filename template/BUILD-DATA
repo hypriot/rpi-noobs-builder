@@ -1,0 +1,7 @@
+Build-date: 2015-02-01
+NOOBS Version: v1.3.12
+NOOBS custom HEAD
+rpi-userland Git master @ 3b81b91c18ff19f97033e146a9f3262ca631f0e9
+rpi-firmware Git master @ 1f56136651963e57af304fdb640468cdfb04d43a
+rpi-linux Git rpi-3.18.y @ c7f0bf70a6d09b01fa5d78ffc14d5800ff288647
+rpi-linux7 custom rpi-3.18.y

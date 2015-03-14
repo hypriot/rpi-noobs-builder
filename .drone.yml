@@ -1,0 +1,33 @@
+# The following variables have to be defined in the GUI
+# of the Drone Buildserver
+#
+# RPI_IMAGE_BUILDER_ROOT: /builder
+# BUILD_RESULTS: /build_result
+#
+# For uploading the build results to Amazon S3
+# we need the follwing Amazon S3 credentials
+#
+# AWS_ACCESS_KEY_ID: your_aws_key
+# AWS_SECRET_ACCESS_KEY: your_secret_access_key
+#
+image: hypriot/builder_base
+
+git:
+  path: github.com/hypriot/rpi-noobs-builder
+
+script:
+  - apt-get install -yqq python-pip zip xz 
+  - pip install awscli
+  - create_noobs.sh
+
+
+publish:
+  s3:
+    acl: public-read
+    region: eu-central-1
+    bucket: buildserver-production
+    access_key: $$AWS_ACCESS_KEY_ID
+    secret_key: $$AWS_SECRET_ACCESS_KEY
+    source: result/
+    target: noobs/
+#    recursive: true
