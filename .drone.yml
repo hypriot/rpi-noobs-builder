@@ -17,7 +17,7 @@ git:
 
 script:
   - apt-get update
-  - apt-get install -yqq python-pip zip xz 
+  - apt-get install -yqq python-pip zip xzip 
   - pip install awscli
   - create_noobs.sh
 
