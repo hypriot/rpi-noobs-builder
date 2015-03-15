@@ -1,12 +1,25 @@
 #!/bin/bash
-set -e
-set -x
+set -ex
 
 echo "prepare"
-
 path=`pwd`
-
 imagename=`cat VERSION`
+
+
+# set up error handling for cleaning up
+# after having an error
+handle_error() {
+echo "FAILED: line $1, exit code $2"
+echo "Removing loop device"
+# ensure we are outside mounted image filesystem
+cd /
+# remove loop device for image
+kpartx -vds ${imagename}
+exit 1
+}
+
+trap 'handle_error $LINENO $?' ERR
+
 
 #echo $REGION
 #echo $AWS_REGION
