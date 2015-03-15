@@ -32,17 +32,18 @@ trap 'handle_error $LINENO $?' ERR
   
 bootfs="./tmp/boot"
 rootfs="./tmp/root"
+result="./result"
 
 boot_archive=$imagename"-boot.tar"
 root_archive=$imagename"-root.tar"
 noobs_template="noobs-template.tar"
 
-NOOBS=$path/NOOBS-$imagename.zip
+NOOBS=$path/result/NOOBS-$imagename.zip
 
 #loopdev="loop0"
 
 echo "##### create folder #####"
-mkdir -p $bootfs $rootfs
+mkdir -p $bootfs $rootfs $result
 
 echo "##### untar noobs template #####"
 #tar xf $noobs_template -C ./tmp/
