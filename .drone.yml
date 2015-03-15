@@ -17,7 +17,8 @@ git:
 
 script:
   - apt-get update
-  - apt-get install -yqq python-pip zip xzip kpartx awscli
+  - apt-get install -yqq python-pip zip xzip kpartx 
+  - pip install awscli
   - ./create_noobs.sh
 
 
