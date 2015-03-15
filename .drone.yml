@@ -19,7 +19,7 @@ script:
   - apt-get update
   - apt-get install -yqq python-pip zip xzip kpartx 
   - pip install awscli
-  - aws s3 --region eu-central-1 cp s3://buildserver-production/images/`cat VERSION` .
+  - aws s3 --region eu-central-1 cp s3://buildserver-production/images/`cat VERSION`.zip .
   - ./create_noobs.sh
 
 
