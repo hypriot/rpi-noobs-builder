@@ -1,10 +1,8 @@
 #!/bin/bash
-set -ex
+set -e
 
-echo "prepare"
 path=`pwd`
 imagename=`cat VERSION`
-
 
 # set up error handling for cleaning up
 # after having an error
@@ -20,15 +18,7 @@ exit 1
 
 trap 'handle_error $LINENO $?' ERR
 
-
-#echo $REGION
-#echo $AWS_REGION
-#aws s3 --region eu-central-1 cp s3://buildserver-production/images/$imagename $BUILD_INPUTS/
-#mkdir $BUILD_INPUTS 
-
-#aws s3 cp s3://buildserver-production/images/$imagename .
-
-#imagename=$BUILD_INPUTS/$imagename
+#aws s3 cp s3://buildserver-production/images/$imagename.zip .
   
 bootfs="./tmp/boot"
 rootfs="./tmp/root"
@@ -45,16 +35,14 @@ NOOBS=$path/result/NOOBS-$imagename.zip
 echo "##### create folder #####"
 mkdir -p $bootfs $rootfs $result
 
-echo "##### untar noobs template #####"
+#echo "##### untar noobs template #####"
 #tar xf $noobs_template -C ./tmp/
 
 echo "##### unzip img #####"
 unzip $imagename.zip
 
 echo "##### create loopdevice #####"
-loopdev=`kpartx -av $imagename | sed -E 's/.*(loop[0-9])p.*/\1/g' | head -1`
-
-echo $loopdev
+loopdev=`kpartx -avs $imagename | sed -E 's/.*(loop[0-9])p.*/\1/g' | head -1`
 
 echo "##### mount partitions #####"
 mount -o loop /dev/mapper/${loopdev}p1 $bootfs
@@ -72,23 +60,24 @@ umount "$bootfs"
 umount "$rootfs"
 
 sleep 2
-echo "##### list loopdevices #####"
-kpartx -l $imagename
-ls -l /dev/mapper/
 
-sleep 2
+#echo "##### list loopdevices #####"
+#kpartx -lv $imagename
+#ls -l /dev/mapper/
+#sleep 2
+
 echo "##### delete loopdevices #####"
-kpartx -dv $imagename
+kpartx -dvs $imagename
 
 echo "##### compress boot #####"
 xz --compress $boot_archive
 echo "##### compress root #####"
 xz --compress $root_archive
 
-
 echo "##### move filesystems #####"
 mv $boot_archive".xz" template/os/hypriot/boot.tar.xz
 mv $root_archive".xz" template/os/hypriot/root.tar.xz
+
 
 echo "##### zip new noobs #####"
 cd ./template/
@@ -98,4 +87,6 @@ zip -r $NOOBS .
 echo "##### delete folder #####"
 cd $path
 rm -r tmp
+
+echo "***** NOOBS created *****"
 
