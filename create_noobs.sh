@@ -8,7 +8,10 @@ path=`pwd`
 
 imagename=`cat VERSION`
 
-aws s3 cp s3://buildserver-production/images/$imagename $BUILD_INPUTS/
+echo $REGION
+echo $AWS_REGION
+
+aws s3 --region eu-central-1 cp s3://buildserver-production/images/$imagename $BUILD_INPUTS/
 
 imagename=$BUILD_INPUTS/$imagename
   
