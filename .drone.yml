@@ -16,10 +16,11 @@ git:
   path: github.com/hypriot/rpi-noobs-builder
 
 script:
-  - apt-get install -yqq python-pip zip xz 
+  - apt-get update
+  - apt-get install -yqq python-pip zip xzip kpartx 
   - pip install awscli
   - aws s3 --region eu-central-1 cp s3://buildserver-production/images/`cat VERSION` .
-  - create_noobs.sh
+  - ./create_noobs.sh
 
 
 publish:
@@ -31,4 +32,3 @@ publish:
     secret_key: $$AWS_SECRET_ACCESS_KEY
     source: result/
     target: noobs/
-#    recursive: true

@@ -1,12 +1,21 @@
 #!/bin/bash
+set -e
+set -x
+
+echo "prepare"
 
 path=`pwd`
 
 imagename=`cat VERSION`
 
+#echo $REGION
+#echo $AWS_REGION
 #aws s3 --region eu-central-1 cp s3://buildserver-production/images/$imagename $BUILD_INPUTS/
+#mkdir $BUILD_INPUTS 
 
-imagename=$BUILD_INPUTS/$imagename
+#aws s3 cp s3://buildserver-production/images/$imagename .
+
+#imagename=$BUILD_INPUTS/$imagename
   
 bootfs="./tmp/boot"
 rootfs="./tmp/root"
@@ -65,7 +74,7 @@ mv $boot_archive".xz" template/os/hypriot/boot.tar.xz
 mv $root_archive".xz" template/os/hypriot/root.tar.xz
 
 echo "##### zip new noobs #####"
-cd ./tmp/noobs/
+cd ./template/
 #zip -r $path/NOOBS-$imagename.zip .
 zip -r $NOOBS .
 
