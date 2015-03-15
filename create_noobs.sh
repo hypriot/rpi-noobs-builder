@@ -13,7 +13,7 @@ imagename=`cat VERSION`
 #aws s3 --region eu-central-1 cp s3://buildserver-production/images/$imagename $BUILD_INPUTS/
 #mkdir $BUILD_INPUTS 
 
-aws s3 cp s3://buildserver-production/images/$imagename .
+AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY AWS_REGION=$AWS_REGION aws s3 cp s3://buildserver-production/images/$imagename .
 
 #imagename=$BUILD_INPUTS/$imagename
   
