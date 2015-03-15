@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "prepare"
+
 path=`pwd`
 
 imagename=`cat VERSION`
