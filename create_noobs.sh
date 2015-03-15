@@ -34,6 +34,9 @@ mkdir -p $bootfs $rootfs
 echo "##### untar noobs template #####"
 #tar xf $noobs_template -C ./tmp/
 
+echo "##### unzip img #####"
+unzip $imagename.zip
+
 echo "##### create loopdevice #####"
 loopdev=`kpartx -av $imagename | sed -E 's/.*(loop[0-9])p.*/\1/g' | head -1`
 
