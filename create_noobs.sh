@@ -8,12 +8,9 @@ path=`pwd`
 
 imagename=`cat VERSION`
 
-echo $REGION
-echo $AWS_REGION
+#echo $REGION
+#echo $AWS_REGION
 #aws s3 --region eu-central-1 cp s3://buildserver-production/images/$imagename $BUILD_INPUTS/
-
-
-modprobe loop
 
 aws s3 cp s3://buildserver-production/images/$imagename $BUILD_INPUTS/
 
