@@ -1,8 +1,8 @@
 {
   "flavours": [
     {
-      "name": "hypriot-Raspbian",
-      "description": "A Debian wheezy port, optimised for docker.io on the Raspberry Pi",
+      "name": "hypriotOS",
+      "description": "A Raspbian-based operating system optimised for Docker",
       "supported_hex_revisions": "2,3,4,5,6,7,8,9,d,e,f,10,11,12,14,1040,1041"
     }
   ]
