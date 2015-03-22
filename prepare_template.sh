@@ -55,14 +55,11 @@ echo "##### move filesystems #####"
 mv "$boot_archive.xz" os/hypriotos/boot.tar.xz
 mv "$root_archive.xz" os/hypriotos/root.tar.xz
 
-
 echo $uncompressed_boot
 echo $uncompressed_root
 
 stat -c %s os/hypriotos/boot.tar.xz
 stat -c %s os/hypriotos/root.tar.xz
-
-
 
 echo "create config files"
 
@@ -138,12 +135,6 @@ cat << EOWF > ${OSPATH}/partitions.json
 }
 EOWF
 
+echo "***** config files created *****"
 
-echo "##### zip new noobs #####"
 zip -r $NOOBS .
-
-echo "##### delete folder #####"
-cd $path && rm -r temp
-
-echo "***** NOOBS created *****"
-

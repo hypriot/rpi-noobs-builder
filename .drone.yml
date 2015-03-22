@@ -5,9 +5,9 @@ git:
 script:
   - aws s3 --region eu-central-1 cp s3://buildserver-production/images/`cat VERSION`.zip .
   - wget -q --content-disposition http://downloads.raspberrypi.org/NOOBS_lite_latest
+  - ./prepare_filesystem.sh
   - ./prepare_template.sh
-  - ./create.sh
-
+  - echo "#####################\n***** COMPLETED *****\n#####################"
 
 publish:
   s3:
