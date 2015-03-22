@@ -65,6 +65,7 @@ rm -r $bootfs $rootfs
 
 echo "infos"
 ls -la 
+ls -la tmp/
 
 export uncompressed_boot=$(stat -c %s $boot_archive)
 export uncompressed_root=$(stat -c %s $root_archive)

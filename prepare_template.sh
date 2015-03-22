@@ -17,22 +17,6 @@ RELEASE_NOTES_URL="http://assets.hypriot.com/noobs_release_notes.txt"
 SLIDES_URL="http://assets.hypriot.com/noobs_slides.zip"
 NOOBS_URL="http://downloads.raspberrypi.org/NOOBS_lite_latest"
 
-
-# set up error handling for cleaning up
-# after having an error
-handle_error() {
-echo "FAILED: line $1, exit code $2"
-echo "Removing loop device"
-# ensure we are outside mounted image filesystem
-cd /
-# remove loop device for image
-kpartx -vds ${imagename}
-exit 1
-}
-
-trap 'handle_error $LINENO $?' ERR
-
-
 cd tmp/
 echo " load noobs lite"
 wget -qO tmp.zip $NOOBS_URL && unzip tmp.zip && rm tmp.zip
@@ -52,8 +36,8 @@ runinstaller quiet vt.cur_default=1 elevator=deadline silentinstall
 EOF
 
 echo "##### move filesystems #####"
-mv "$boot_archive.xz" os/hypriotos/boot.tar.xz
-mv "$root_archive.xz" os/hypriotos/root.tar.xz
+mv "../$boot_archive.xz" os/hypriotos/boot.tar.xz
+mv "../$root_archive.xz" os/hypriotos/root.tar.xz
 
 echo $uncompressed_boot
 echo $uncompressed_root
