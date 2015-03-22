@@ -6,6 +6,9 @@ profile="hypriot-rpi"
 version=`cat VERSION`
 imagename="$profile-$version.img"
 
+boot_archive=$1
+root_archive=$2
+
 
 # set up error handling for cleaning up
 # after having an error
@@ -25,9 +28,6 @@ trap 'handle_error $LINENO $?' ERR
   
 bootfs="./tmp/boot"
 rootfs="./tmp/root"
-
-boot_archive="$profile-$version-boot.tar"
-root_archive="$profile-$version-root.tar"
 
 #loopdev="loop0"
 
@@ -67,11 +67,13 @@ echo "infos"
 ls -la 
 ls -la tmp/
 
-export uncompressed_boot=$(stat -c %s $boot_archive)
-export uncompressed_root=$(stat -c %s $root_archive)
+cat <<TMP > tmpfile
+uncompressed_boot=$(stat -c %s $boot_archive)
+uncompressed_root=$(stat -c %s $root_archive)
+TMP
 
-export boot_archive=$boot_archive
-export root_archive=$root_archive
+#boot_archive=$boot_archive
+#root_archive=$root_archive
 
 echo "##### compress boot #####"
 xz --compress $boot_archive

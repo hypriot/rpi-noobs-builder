@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+boot_archive=$1
+root_archive=$2
+
+. ./tmpfile
+
 path=`pwd`
 profile="hypriot-rpi"
 version=`cat VERSION`
@@ -34,6 +39,8 @@ echo "enable silentinstall"
 cat << EOF > recovery.cmdline
 runinstaller quiet vt.cur_default=1 elevator=deadline silentinstall
 EOF
+
+tree
 
 echo "##### move filesystems #####"
 mv "../$boot_archive.xz" os/hypriotos/boot.tar.xz
