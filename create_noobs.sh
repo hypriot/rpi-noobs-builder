@@ -61,6 +61,11 @@ sleep 2
 echo "##### delete loopdevices #####"
 kpartx -dvs $imagename
 
+
+echo "##### FS size #####"
+stat -c %s $boot_archive
+stat -c %s $root_archive
+
 echo "##### compress boot #####"
 xz --compress $boot_archive
 echo "##### compress root #####"
@@ -75,10 +80,7 @@ cp -rf template/* temp/
 mv $boot_archive".xz" temp/os/hypriotos/boot.tar.xz
 mv $root_archive".xz" temp/os/hypriotos/root.tar.xz
 
-echo "##### FS size #####"
 stat -c %s temp/os/hypriotos/boot.tar.xz
-stat -c %s $boot_archive
-stat -c %s $root_archive
 stat -c %s temp/os/hypriotos/root.tar.xz
 
 echo "##### zip new noobs #####"
