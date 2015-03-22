@@ -70,8 +70,8 @@ xz --compress $root_archive
 
 echo "##### move filesystems #####"
 mkdir -p temp/
-unzip NOOBS_*.zip -d temp/
-mv template/* temp/
+unzip NOOBS_lite_*.zip -d temp/
+cp -rf template/* temp/
 mv $boot_archive".xz" temp/os/hypriotos/boot.tar.xz
 mv $root_archive".xz" temp/os/hypriotos/root.tar.xz
 

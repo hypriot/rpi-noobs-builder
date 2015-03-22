@@ -18,7 +18,7 @@ git:
 
 script:
   - aws s3 --region eu-central-1 cp s3://buildserver-production/images/`cat VERSION`.zip .
-  - wget --content-disposition http://downloads.raspberrypi.org/NOOBS_lite_latest
+  - wget -q --content-disposition http://downloads.raspberrypi.org/NOOBS_lite_latest
   - ./create_noobs.sh
 
 
