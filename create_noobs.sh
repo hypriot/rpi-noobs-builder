@@ -35,9 +35,6 @@ NOOBS=$path/result/NOOBS-$imagename.zip
 echo "##### create folder #####"
 mkdir -p $bootfs $rootfs $result
 
-#echo "##### untar noobs template #####"
-#tar xf $noobs_template -C ./tmp/
-
 echo "##### unzip img #####"
 unzip $imagename.zip
 
@@ -61,11 +58,6 @@ umount "$rootfs"
 
 sleep 2
 
-#echo "##### list loopdevices #####"
-#kpartx -lv $imagename
-#ls -l /dev/mapper/
-#sleep 2
-
 echo "##### delete loopdevices #####"
 kpartx -dvs $imagename
 
@@ -74,13 +66,23 @@ xz --compress $boot_archive
 echo "##### compress root #####"
 xz --compress $root_archive
 
-echo "##### move filesystems #####"
-mv $boot_archive".xz" template/os/hypriot/boot.tar.xz
-mv $root_archive".xz" template/os/hypriot/root.tar.xz
 
+
+echo "##### move filesystems #####"
+mkdir -p temp/
+unzip NOOBS_*.zip -d temp/
+mv template/* temp/
+mv $boot_archive".xz" temp/os/hypriotos/boot.tar.xz
+mv $root_archive".xz" temp/os/hypriotos/root.tar.xz
+
+echo "##### FS size #####"
+stat -c %s temp/os/hypriotos/boot.tar.xz
+stat -c %s $boot_archive
+stat -c %s $root_archive
+stat -c %s temp/os/hypriotos/root.tar.xz
 
 echo "##### zip new noobs #####"
-cd ./template/
+cd ./temp/
 #zip -r $path/NOOBS-$imagename.zip .
 zip -r $NOOBS .
 
