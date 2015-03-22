@@ -2,7 +2,13 @@
 set -e
 
 path=`pwd`
-imagename=`cat VERSION`
+profile="hypriot-rpi"
+version=`cat VERSION`
+imagename="$profile-$version.img"
+
+boot_archive=$1
+root_archive=$2
+
 
 # set up error handling for cleaning up
 # after having an error
@@ -22,18 +28,11 @@ trap 'handle_error $LINENO $?' ERR
   
 bootfs="./tmp/boot"
 rootfs="./tmp/root"
-result="./result"
-
-boot_archive=$imagename"-boot.tar"
-root_archive=$imagename"-root.tar"
-noobs_template="noobs-template.tar"
-
-NOOBS=$path/result/NOOBS-$imagename.zip
 
 #loopdev="loop0"
 
 echo "##### create folder #####"
-mkdir -p $bootfs $rootfs $result
+mkdir -p $bootfs $rootfs
 
 echo "##### unzip img #####"
 unzip $imagename.zip
@@ -61,36 +60,22 @@ sleep 2
 echo "##### delete loopdevices #####"
 kpartx -dvs $imagename
 
+echo "##### remove folder #####"
+rm -r $bootfs $rootfs
 
-echo "##### FS size #####"
-stat -c %s $boot_archive
-stat -c %s $root_archive
+echo "infos"
+ls -la 
+ls -la tmp/
+
+cat <<TMP > tmpfile
+uncompressed_boot=$(stat -c %s $boot_archive)
+uncompressed_root=$(stat -c %s $root_archive)
+TMP
+
+#boot_archive=$boot_archive
+#root_archive=$root_archive
 
 echo "##### compress boot #####"
 xz --compress $boot_archive
 echo "##### compress root #####"
 xz --compress $root_archive
-
-
-
-echo "##### move filesystems #####"
-mkdir -p temp/
-unzip NOOBS_lite_*.zip -d temp/
-cp -rf template/* temp/
-mv $boot_archive".xz" temp/os/hypriotos/boot.tar.xz
-mv $root_archive".xz" temp/os/hypriotos/root.tar.xz
-
-stat -c %s temp/os/hypriotos/boot.tar.xz
-stat -c %s temp/os/hypriotos/root.tar.xz
-
-echo "##### zip new noobs #####"
-cd ./temp/
-#zip -r $path/NOOBS-$imagename.zip .
-zip -r $NOOBS .
-
-echo "##### delete folder #####"
-cd $path
-rm -r tmp
-
-echo "***** NOOBS created *****"
-
