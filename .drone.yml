@@ -1,4 +1,4 @@
-image: registry.hypriot.com/hypriot/drone_builder_base:latest
+image: registry.hypriot.com/hypriot/drone_builder_base
 git:
   path: github.com/hypriot/rpi-noobs-builder
 
